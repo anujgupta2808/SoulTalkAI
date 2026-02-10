@@ -2,7 +2,7 @@
 // CHATGPT API INTEGRATION (INDIRECT)
 // ============================================
 
-const BACKEND_URL = 'http://localhost:3000'; // Your backend server
+const BACKEND_URL = 'https://soultalkai.onrender.com'; // Your backend server // Your backend server
 
 async function getChatGPTResponse(userMessage, conversationContext = []) {
     try {
