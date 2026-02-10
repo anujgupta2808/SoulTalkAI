@@ -1,0 +1,91 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4169e1;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#1e90ff;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="250" cy="250" r="240" fill="url(#bg)"/>
+  
+  <!-- Body -->
+  <rect x="200" y="320" width="100" height="120" rx="15" fill="#4169e1"/>
+  
+  <!-- Neck -->
+  <rect x="235" y="285" width="30" height="40" fill="#ffc896"/>
+  
+  <!-- Head -->
+  <ellipse cx="250" cy="215" rx="70" ry="80" fill="#ffc896"/>
+  
+  <!-- Hair -->
+  <ellipse cx="250" cy="170" rx="75" ry="60" fill="#2c1810"/>
+  <path d="M 175 190 L 180 220 L 190 210 Z" fill="#2c1810"/>
+  <path d="M 325 190 L 320 220 L 310 210 Z" fill="#2c1810"/>
+  <ellipse cx="230" cy="180" rx="30" ry="45" fill="#2c1810"/>
+  <ellipse cx="270" cy="180" rx="30" ry="45" fill="#2c1810"/>
+  <path d="M 200 175 Q 220 160 240 175" fill="#2c1810"/>
+  <path d="M 260 175 Q 280 160 300 175" fill="#2c1810"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="225" cy="215" rx="10" ry="14" fill="#2d1f1a"/>
+  <ellipse cx="275" cy="215" rx="10" ry="14" fill="#2d1f1a"/>
+  <circle cx="227" cy="212" r="4" fill="#fff" opacity="0.9"/>
+  <circle cx="277" cy="212" r="4" fill="#fff" opacity="0.9"/>
+  <circle cx="228" cy="217" r="2" fill="#fff" opacity="0.6"/>
+  <circle cx="278" cy="217" r="2" fill="#fff" opacity="0.6"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 210 200 Q 225 195 240 200" stroke="#2c1810" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 260 200 Q 275 195 290 200" stroke="#2c1810" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Nose -->
+  <path d="M 250 225 L 248 238" stroke="#e09b5f" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Smile -->
+  <path d="M 225 250 Q 250 260 275 250" stroke="#d4876f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Arms -->
+  <rect x="150" y="340" width="45" height="90" rx="20" fill="#4169e1" transform="rotate(-10 172 385)"/>
+  <rect x="305" y="340" width="45" height="90" rx="20" fill="#4169e1" transform="rotate(10 327 385)"/>
+  
+  <!-- Hands -->
+  <circle cx="165" cy="425" r="18" fill="#ffc896"/>
+  <circle cx="335" cy="425" r="18" fill="#ffc896"/>
+  
+  <!-- Thumbs up gesture -->
+  <g transform="translate(335, 425) rotate(-20)">
+    <rect x="-5" y="-20" width="10" height="15" rx="5" fill="#ffc896"/>
+  </g>
+  
+  <!-- Chat bubble -->
+  <g opacity="0.95">
+    <rect x="310" y="130" width="150" height="75" rx="15" fill="#fff"/>
+    <polygon points="310,160 285,165 310,175" fill="#fff"/>
+    <text x="385" y="160" font-size="16" fill="#4169e1" text-anchor="middle" font-weight="bold">Hey! 😊</text>
+    <text x="385" y="185" font-size="14" fill="#666" text-anchor="middle">I'm always here</text>
+  </g>
+  
+  <!-- Hearts -->
+  <g opacity="0.7">
+    <text x="130" y="200" font-size="26" fill="#4169e1">💙</text>
+    <animateTransform attributeName="transform" type="translate" values="0,0; -12,-35; -12,-70" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.7;0" dur="3s" repeatCount="indefinite"/>
+  </g>
+  
+  <g opacity="0.7">
+    <text x="390" y="310" font-size="22" fill="#1e90ff">💙</text>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 18,-45; 18,-90" dur="4s" repeatCount="indefinite" begin="1.2s"/>
+    <animate attributeName="opacity" values="0.7;0.7;0" dur="4s" repeatCount="indefinite" begin="1.2s"/>
+  </g>
+  
+  <!-- Stars -->
+  <text x="100" y="140" font-size="24" fill="#ffd700" opacity="0.8">⭐</text>
+  <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+  
+  <text x="400" y="380" font-size="20" fill="#ffd700" opacity="0.8">✨</text>
+  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+  
+  <text x="80" y="360" font-size="18" fill="#ffd700" opacity="0.8">⭐</text>
+  <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.8s" repeatCount="indefinite"/>
+</svg>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulTalk AI</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23a78bfa'/><stop offset='100%25' style='stop-color:%2314b8a6'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><path d='M30 45 Q50 25 70 45' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/><circle cx='38' cy='48' r='4' fill='white'/><circle cx='62' cy='48' r='4' fill='white'/><path d='M35 65 Q50 75 65 65' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/></svg>">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+body.preview-male{
+    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.preview-female{
+    background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.container{
+    background:white;
+    border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+    max-width:500px;
+    width:100%;
+    padding:40px;
+    animation:slideUp 0.5s;
+}
+
+@keyframes slideUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h1{
+    font-size:32px;
+    background:linear-gradient(90deg,#667eea,#764ba2);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    margin-bottom:10px;
+}
+
+.logo p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    color:#334155;
+    font-weight:600;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:12px 16px;
+    border:2px solid #e2e8f0;
+    border-radius:10px;
+    font-size:15px;
+    transition:border 0.3s;
+    font-family:inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    outline:none;
+    border-color:#667eea;
+}
+
+.gender-options{
+    display:flex;
+    gap:15px;
+    margin-top:8px;
+}
+
+.gender-option{
+    flex:1;
+    position:relative;
+}
+
+.gender-option input[type="radio"]{
+    position:absolute;
+    opacity:0;
+}
+
+.gender-option label{
+    display:block;
+    padding:12px;
+    border:2px solid #e2e8f0;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-weight:500;
+}
+
+.gender-option input[type="radio"]:checked + label{
+    background:#667eea;
+    color:white;
+    border-color:#667eea;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(90deg,#667eea,#764ba2);
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform 0.2s;
+    margin-top:10px;
+}
+
+.submit-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(102,126,234,0.4);
+}
+
+.error{
+    color:#ef4444;
+    font-size:13px;
+    margin-top:5px;
+    display:none;
+}
+
+.checkbox-group{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:20px;
+}
+
+.checkbox-group input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+
+.checkbox-group label{
+    color:#64748b;
+    font-size:14px;
+    cursor:pointer;
+}
+
+@media(max-width:600px){
+    .container{
+        padding:30px 20px;
+    }
+    .gender-options{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo">
+        <h1>Welcome to SoulTalk AI 💙</h1>
+        <p>Let's get to know you better</p>
+    </div>
+
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <span class="error" id="nameError">Please enter your name</span>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age *</label>
+            <input type="number" id="age" placeholder="Enter your age" min="13" max="120" required>
+            <span class="error" id="ageError">Please enter a valid age (13+)</span>
+        </div>
+
+        <div class="form-group">
+            <label>Gender *</label>
+            <div class="gender-options">
+                <div class="gender-option">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">Male</label>
+                </div>
+                <div class="gender-option">
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+                <div class="gender-option">
+                    <input type="radio" id="other" name="gender" value="other">
+                    <label for="other">Other</label>
+                </div>
+            </div>
+            <span class="error" id="genderError">Please select your gender</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email (Optional)</label>
+            <input type="email" id="email" placeholder="your@email.com">
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Why are you here today? *</label>
+            <select id="reason" required>
+                <option value="">Select a reason</option>
+                <option value="lonely">Feeling lonely</option>
+                <option value="stressed">Stressed or anxious</option>
+                <option value="sad">Feeling sad</option>
+                <option value="talk">Just want to talk</option>
+                <option value="support">Need emotional support</option>
+                <option value="other">Other</option>
+            </select>
+            <span class="error" id="reasonError">Please select a reason</span>
+        </div>
+
+        <div class="form-group">
+            <label for="language">Preferred Language *</label>
+            <select id="language" required>
+                <option value="en">English</option>
+                <option value="es">Spanish (Español)</option>
+                <option value="fr">French (Français)</option>
+                <option value="de">German (Deutsch)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="zh">Chinese (中文)</option>
+                <option value="ja">Japanese (日本語)</option>
+                <option value="ko">Korean (한국어)</option>
+                <option value="ar">Arabic (العربية)</option>
+                <option value="pt">Portuguese (Português)</option>
+                <option value="ru">Russian (Русский)</option>
+                <option value="it">Italian (Italiano)</option>
+            </select>
+            <span class="error" id="languageError">Please select a language</span>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to privacy policy and terms</label>
+        </div>
+        <span class="error" id="termsError">Please accept the terms</span>
+
+        <button type="submit" class="submit-btn">Start Chatting 💬</button>
+    </form>
+</div>
+
+<script>
+const form = document.getElementById('loginForm');
+const genderInputs = document.querySelectorAll('input[name="gender"]');
+
+// Preview theme on gender selection
+genderInputs.forEach(input => {
+    input.addEventListener('change', (e) => {
+        document.body.classList.remove('preview-male', 'preview-female');
+        if (e.target.value === 'male') {
+            document.body.classList.add('preview-male');
+        } else if (e.target.value === 'female') {
+            document.body.classList.add('preview-female');
+        }
+    });
+});
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Hide all errors
+    document.querySelectorAll('.error').forEach(err => err.style.display = 'none');
+    
+    // Get values
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value;
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const email = document.getElementById('email').value.trim();
+    const reason = document.getElementById('reason').value;
+    const terms = document.getElementById('terms').checked;
+    
+    let isValid = true;
+    
+    // Validate
+    if (!name) {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+    }
+    
+    if (!age || age < 13 || age > 120) {
+        document.getElementById('ageError').style.display = 'block';
+        isValid = false;
+    }
+    
+    if (!gender) {
+        document.getElementById('genderError').style.display = 'block';
+        isValid = false;
+    }
+    
+    if (!reason) {
+        document.getElementById('reasonError').style.display = 'block';
+        isValid = false;
+    }
+    
+    if (!terms) {
+        document.getElementById('termsError').style.display = 'block';
+        isValid = false;
+    }
+    
+    if (isValid) {
+        // Save user data
+        const userData = {
+            name: name,
+            age: age,
+            gender: gender.value,
+            email: email,
+            reason: reason,
+            language: document.getElementById('language').value,
+            timestamp: new Date().toISOString()
+        };
+        
+        localStorage.setItem('soulTalkUser', JSON.stringify(userData));
+        
+        // Redirect to main page
+        window.location.href = 'index.html';
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulTalk AI</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23a78bfa'/><stop offset='100%25' style='stop-color:%2314b8a6'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><path d='M30 45 Q50 25 70 45' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/><circle cx='38' cy='48' r='4' fill='white'/><circle cx='62' cy='48' r='4' fill='white'/><path d='M35 65 Q50 75 65 65' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/></svg>">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Navbar */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 60px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    position:sticky;
+    top:0;
+    z-index:100;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#a78bfa,#14b8a6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.logo::before{
+    content:'';
+    width:32px;
+    height:32px;
+    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23a78bfa'/><stop offset='100%25' style='stop-color:%2314b8a6'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><path d='M30 45 Q50 25 70 45' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/><circle cx='38' cy='48' r='4' fill='white'/><circle cx='62' cy='48' r='4' fill='white'/><path d='M35 65 Q50 75 65 65' stroke='white' stroke-width='4' fill='none' stroke-linecap='round'/></svg>") center/contain no-repeat;
+}
+.logo::after{
+    content:none;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:30px;
+}
+
+nav ul li{
+    cursor:pointer;
+    transition:color 0.3s;
+}
+
+nav ul li:hover{
+    color:#a78bfa;
+}
+
+.btn{
+    background:linear-gradient(90deg,#14b8a6,#6366f1);
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+    transition:transform 0.2s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+#navBtn{
+    position: relative;
+    right: 10px;
+}
+/* Hero Section */
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:60px;
+    gap:40px;
+}
+
+.hero-text{
+    width:50%;
+}
+
+.hero-text h1{
+    font-size:48px;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+.hero-text p{
+    color:#cbd5e1;
+    margin-bottom:30px;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.start-btn{
+    background:#6366f1;
+    padding:14px 28px;
+    border-radius:10px;
+    border:none;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:600;
+    transition:all 0.3s;
+}
+
+.start-btn:hover{
+    background:#5558e3;
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(99,102,241,0.4);
+}
+
+/* Chat box */
+.chat-box{
+    margin-top:30px;
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:14px;
+    width:100%;
+    max-height:400px;
+    overflow-y:auto;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.chat-box::-webkit-scrollbar{width:8px;}
+.chat-box::-webkit-scrollbar-track{background:rgba(255,255,255,0.05);border-radius:10px;}
+.chat-box::-webkit-scrollbar-thumb{background:#6366f1;border-radius:10px;}
+
+.msg-user{
+    background:#3b82f6;
+    padding:12px 16px;
+    border-radius:12px;
+    margin-bottom:10px;
+    max-width:80%;
+    margin-left:auto;
+    animation:slideIn 0.3s;
+}
+
+.msg-ai{
+    background:#e5e7eb;
+    color:#111;
+    padding:12px 16px;
+    border-radius:12px;
+    margin-bottom:10px;
+    max-width:80%;
+    animation:slideIn 0.3s;
+}
+
+@keyframes slideIn{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.input{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+}
+
+.input input{
+    flex:1;
+    padding:12px 16px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.9);
+    font-size:15px;
+}
+
+.input input:focus{
+    outline:2px solid #6366f1;
+}
+
+.input button{
+    border:none;
+    background:#6366f1;
+    color:white;
+    padding:12px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:background 0.3s;
+}
+
+.input button:hover{
+    background:#5558e3;
+}
+
+/* Image Side */
+.hero-img{
+    width:45%;
+}
+
+.hero-img img{
+    width:68%;
+    position: relative;
+    top: -13px;
+    left: 150px;
+    border-radius:20px;
+    filter:drop-shadow(0 20px 40px rgba(99,102,241,0.3));
+}
+
+/* Features Section */
+.features{
+    padding:80px 60px;
+    background:rgba(255,255,255,0.02);
+}
+
+.features h2{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:50px;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.feature-card{
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.1);
+    transition:transform 0.3s, background 0.3s;
+}
+
+.feature-card:hover{
+    transform:translateY(-5px);
+    background:rgba(255,255,255,0.08);
+}
+
+.feature-icon{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.feature-card h3{
+    margin-bottom:10px;
+    color:#a78bfa;
+}
+
+.feature-card p{
+    color:#cbd5e1;
+    line-height:1.6;
+}
+
+/* Stats Section */
+.stats{
+    padding:60px;
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+    gap:30px;
+}
+
+.stat-item{
+    text-align:center;
+}
+
+.stat-number{
+    font-size:48px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#a78bfa,#14b8a6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+
+.stat-label{
+    color:#cbd5e1;
+    margin-top:10px;
+}
+
+/* Typing Indicator */
+.typing{
+    display:none;
+    background:#e5e7eb;
+    color:#111;
+    padding:12px 16px;
+    border-radius:12px;
+    margin-bottom:10px;
+    max-width:80px;
+}
+
+.typing span{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    background:#6366f1;
+    border-radius:50%;
+    margin:0 2px;
+    animation:bounce 1.4s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:0.2s;}
+.typing span:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce{
+    0%,60%,100%{transform:translateY(0);}
+    30%{transform:translateY(-10px);}
+}
+
+/* Footer */
+footer{
+    background:rgba(255,255,255,0.05);
+    padding:40px 60px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+footer p{
+    color:#cbd5e1;
+    margin-bottom:20px;
+}
+
+.social-links{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:20px;
+}
+
+.social-links a{
+    color:white;
+    font-size:24px;
+    transition:color 0.3s;
+}
+
+.social-links a:hover{
+    color:#a78bfa;
+}
+
+/* Clear Chat Button */
+.clear-btn{
+    background:rgba(239,68,68,0.2);
+    color:#ef4444;
+    border:1px solid #ef4444;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    margin-top:10px;
+    transition:all 0.3s;
+}
+
+.clear-btn:hover{
+    background:#ef4444;
+    color:white;
+}
+
+/* Responsive */
+@media(max-width:900px){
+    .hero{
+        flex-direction:column;
+        padding:30px;
+    }
+    .hero-text,.hero-img{
+        width:100%;
+    }
+    .hero-text h1{
+        font-size:36px;
+    }
+    .hero-img img{
+        width:100%;
+        left:0;
+        top:0;
+    }
+    nav{
+        padding:18px 30px;
+    }
+    nav ul{
+        display:none;
+    }
+    .features,.stats{
+        padding:40px 30px;
+    }
+    #navBtn{
+        right:0;
+    }
+}
+
+@media(max-width:600px){
+    nav{
+        padding:15px 20px;
+    }
+    .logo{
+        font-size:20px;
+    }
+    .hero{
+        padding:20px;
+    }
+    .hero-text h1{
+        font-size:28px;
+    }
+    .hero-text p{
+        font-size:16px;
+    }
+    .features h2{
+        font-size:28px;
+    }
+    .stat-number{
+        font-size:36px;
+    }
+    footer{
+        padding:30px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">SoulTalk AI</div>
+    <ul>
+        <li onclick="document.querySelector('.hero').scrollIntoView({behavior:'smooth'})">Home</li>
+        <li onclick="document.querySelector('.features').scrollIntoView({behavior:'smooth'})">Features</li>
+        <li onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})">About</li>
+    </ul>
+    <button class="btn" id="navBtn" onclick="window.location.href='chat.html'">Start Chatting</button>
+</nav>
+
+<section class="hero">
+
+<div class="hero-text">
+    <h1>Your Emotional Support Friend</h1>
+    <p>An AI companion with real emotions who truly understands you. Never feel alone again - I'm here to listen, care, and support you through everything.</p>
+
+    <button class="start-btn" onclick="window.location.href='chat.html'">Start Talking</button>
+</div>
+
+<div class="hero-img">
+    <script src="chat.js"></script>
+<script>
+
+// Set companion image based on gender
+if (localStorage.getItem('soulTalkUser')) {
+    const user = JSON.parse(localStorage.getItem('soulTalkUser'));
+    const companionImg = document.createElement('img');
+    companionImg.id = 'companionImage';
+    companionImg.alt = 'AI Companion';
+    if (user.gender === 'female') {
+        companionImg.src = './maletalk.jpg';
+    }
+    else if (user.gender === 'male') {
+        companionImg.src = './femaletalk.png';
+    }
+    else {
+        companionImg.src = './ai-companion.svg';
+    }
+    document.querySelector('.hero-img').appendChild(companionImg);
+} else {
+    const companionImg = document.createElement('img');
+    companionImg.id = 'companionImage';
+    companionImg.alt = 'AI Companion';
+    companionImg.src = './ai-companion.svg';
+    document.querySelector('.hero-img').appendChild(companionImg);
+}
+</script>
+</div>
+
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <h2>Why Choose SoulTalk AI?</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Natural Conversations</h3>
+            <p>Talk like you would with a real friend. No scripts, just genuine chat.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>Emotional Intelligence</h3>
+            <p>AI that understands your feelings and responds with empathy.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>100% Private</h3>
+            <p>Your conversations are safe. No data stored or shared.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⏰</div>
+            <h3>24/7 Available</h3>
+            <p>Always here when you need someone to talk to, day or night.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎭</div>
+            <h3>Mood Detection</h3>
+            <p>Automatically senses your emotions and adapts responses.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌟</div>
+            <h3>Judgment-Free Zone</h3>
+            <p>Share anything without fear. This is your safe space.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="stat-item">
+        <div class="stat-number" id="conversations">50+</div>
+        <div class="stat-label">Conversations Today</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Always Available</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Private & Secure</div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p><strong>SoulTalk AI</strong> - Your Emotional Support Companion</p>
+    <p>Never feel alone again. We're here to listen, understand, and support you.</p>
+    <!-- <div class="social-links">
+        <a href="#" aria-label="Facebook">📘</a>
+        <a href="#" aria-label="Twitter">🐦</a>
+        <a href="#" aria-label="Instagram">📷</a>
+    </div> -->
+    <!-- <p style="margin-top:30px;font-size:14px;color:#64748b;">© 2024 SoulTalk AI. Made with ❤️ for those who need someone to talk to.</p> -->
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

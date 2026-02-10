@@ -1,0 +1,16 @@
+{
+  "name": "soultalk-backend",
+  "version": "1.0.0",
+  "description": "Backend server for SoulTalk AI ChatGPT integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "groq-sdk": "^0.37.0",
+    "node-fetch": "^2.6.7"
+  }
+}

@@ -1,0 +1,84 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="250" cy="250" r="240" fill="url(#bg)"/>
+  
+  <!-- Body -->
+  <ellipse cx="250" cy="380" rx="80" ry="100" fill="#6366f1"/>
+  
+  <!-- Neck -->
+  <rect x="235" y="280" width="30" height="40" fill="#fbbf77"/>
+  
+  <!-- Head -->
+  <circle cx="250" cy="220" r="70" fill="#fbbf77"/>
+  
+  <!-- Hair -->
+  <path d="M 180 220 Q 180 140 250 140 Q 320 140 320 220 L 310 210 Q 310 160 250 160 Q 190 160 190 210 Z" fill="#3b2a1f"/>
+  
+  <!-- Eyes -->
+  <circle cx="225" cy="210" r="8" fill="#2d1f1a"/>
+  <circle cx="275" cy="210" r="8" fill="#2d1f1a"/>
+  <circle cx="227" cy="208" r="3" fill="#fff" opacity="0.8"/>
+  <circle cx="277" cy="208" r="3" fill="#fff" opacity="0.8"/>
+  
+  <!-- Eyebrows -->
+  <path d="M 210 195 Q 225 190 240 195" stroke="#2d1f1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M 260 195 Q 275 190 290 195" stroke="#2d1f1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Nose -->
+  <path d="M 250 220 L 245 235" stroke="#e09b5f" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Smile -->
+  <path d="M 220 245 Q 250 260 280 245" stroke="#d4876f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Arms -->
+  <ellipse cx="170" cy="360" rx="25" ry="70" fill="#6366f1" transform="rotate(-20 170 360)"/>
+  <ellipse cx="330" cy="360" rx="25" ry="70" fill="#6366f1" transform="rotate(20 330 360)"/>
+  
+  <!-- Hands -->
+  <circle cx="155" cy="410" r="20" fill="#fbbf77"/>
+  <circle cx="345" cy="410" r="20" fill="#fbbf77"/>
+  
+  <!-- Waving hand gesture -->
+  <g transform="translate(345, 410)">
+    <animateTransform attributeName="transform" type="rotate" values="0 345 410; -15 345 410; 0 345 410" dur="1.5s" repeatCount="indefinite"/>
+  </g>
+  
+  <!-- Chat bubble -->
+  <g opacity="0.9">
+    <rect x="320" y="150" width="120" height="60" rx="15" fill="#fff"/>
+    <polygon points="320,180 300,190 320,200" fill="#fff"/>
+    <text x="380" y="175" font-size="16" fill="#6366f1" text-anchor="middle" font-weight="bold">I'm here</text>
+    <text x="380" y="195" font-size="16" fill="#6366f1" text-anchor="middle" font-weight="bold">for you! 💙</text>
+  </g>
+  
+  <!-- Heart particles -->
+  <g opacity="0.7">
+    <text x="150" y="200" font-size="24" fill="#ef4444">❤️</text>
+    <animateTransform attributeName="transform" type="translate" values="0,0; -10,-30; -10,-60" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.7;0" dur="3s" repeatCount="indefinite"/>
+  </g>
+  
+  <g opacity="0.7">
+    <text x="370" y="300" font-size="20" fill="#f472b6">💕</text>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 15,-40; 15,-80" dur="4s" repeatCount="indefinite" begin="1s"/>
+    <animate attributeName="opacity" values="0.7;0.7;0" dur="4s" repeatCount="indefinite" begin="1s"/>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="120" r="6" fill="#14b8a6" opacity="0.5">
+    <animate attributeName="cy" values="120;110;120" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="400" cy="400" r="8" fill="#6366f1" opacity="0.5">
+    <animate attributeName="cy" values="400;390;400" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="80" cy="350" r="5" fill="#a78bfa" opacity="0.5">
+    <animate attributeName="cy" values="350;340;350" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg>
