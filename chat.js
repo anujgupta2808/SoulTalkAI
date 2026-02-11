@@ -2,7 +2,7 @@
 // CHATGPT API INTEGRATION (INDIRECT)
 // ============================================
 
-const BACKEND_URL = 'https://soultalkai.onrender.com'; // Your backend server // Your backend server
+const BACKEND_URL = 'https://soultalkai.onrender.com'; // Your backend server
 
 async function getChatGPTResponse(userMessage, conversationContext = []) {
     try {
@@ -229,12 +229,14 @@ function changeVoicePreference() {
 }
 
 function getFemaleVoice() {
-    return voices.find(v => /female|woman|zira|susan|samantha/i.test(v.name)) || 
+    return voices.find(v => /female|woman|zira|susan|samantha|victoria|hazel/i.test(v.name)) || 
+           voices.find(v => v.lang.startsWith('en') && !/(david|mark|george|james)/i.test(v.name)) ||
            voices.find(v => v.lang.startsWith('en'));
 }
 
 function getMaleVoice() {
-    return voices.find(v => /male|man|david|mark|alex/i.test(v.name)) || 
+    return voices.find(v => /male|man|david|mark|george|james/i.test(v.name)) || 
+           voices.find(v => v.lang.startsWith('en') && v.name.includes('Male')) ||
            voices.find(v => v.lang.startsWith('en'));
 }
 
@@ -263,6 +265,8 @@ function initializeVoice() {
     const userData = JSON.parse(localStorage.getItem('soulTalkUser'));
     const preference = voicePreference || userData.voicePreference || 'auto';
     
+    console.log('Available voices:', voices.map(v => v.name)); // Debug log
+    
     if (preference === 'male') {
         currentVoice = getMaleVoice();
     } else if (preference === 'female') {
@@ -276,6 +280,8 @@ function initializeVoice() {
             currentVoice = getMaleVoice();
         }
     }
+    
+    console.log('Selected voice:', currentVoice?.name); // Debug log
 }
 
 function initializeSpeechRecognition() {
@@ -356,17 +362,27 @@ function speakText(text) {
     
     const utterance = new SpeechSynthesisUtterance(cleanText);
     
+    // Ensure voices are loaded
+    if (voices.length === 0) {
+        voices = speechSynthesis.getVoices();
+    }
+    
     if (preference === 'male') {
         utterance.voice = getMaleVoice();
+        utterance.pitch = 0.85; // Lower pitch for male voice
     } else if (preference === 'female') {
         utterance.voice = getFemaleVoice();
+        utterance.pitch = 1.1; // Higher pitch for female voice
     } else { // auto
         if (userData.gender === 'male') {
             utterance.voice = getFemaleVoice();
+            utterance.pitch = 1.1;
         } else if (userData.gender === 'female') {
             utterance.voice = getMaleVoice();
+            utterance.pitch = 0.85;
         } else {
             utterance.voice = getMaleVoice();
+            utterance.pitch = 0.9;
         }
     }
     
@@ -382,29 +398,19 @@ function speakText(text) {
         
         if (lastEmotion === 'sad') {
             utterance.rate = 0.85;
-            utterance.pitch = 1.0;
         } else if (lastEmotion === 'anxious') {
             utterance.rate = 0.88;
-            utterance.pitch = 0.95;
         } else if (lastEmotion === 'happy') {
             utterance.rate = 1.05;
-            utterance.pitch = 1.15;
         } else if (lastEmotion === 'lonely') {
             utterance.rate = 0.9;
-            utterance.pitch = 1.05;
-        } else if (preference === 'female') {
-            utterance.rate = 0.95;
-            utterance.pitch = 1.1;
-        } else if (preference === 'male') {
-            utterance.rate = 0.92;
-            utterance.pitch = 0.9;
         } else {
             utterance.rate = 0.95;
-            utterance.pitch = 1.0;
         }
     }
     
     utterance.volume = 1.0;
+    console.log('Speaking with voice:', utterance.voice?.name, 'Pitch:', utterance.pitch); // Debug log
     speechSynthesis.speak(utterance);
 }
 
